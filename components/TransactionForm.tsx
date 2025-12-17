@@ -45,9 +45,9 @@ const TransactionForm: React.FC<TransactionFormProps> = ({ initialData, defaultT
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm">
-      <div className="w-full max-w-md animate-in fade-in zoom-in duration-200 rounded-2xl bg-white shadow-2xl overflow-hidden">
-        <div className="flex items-center justify-between border-b bg-gray-50 p-4">
+    <div className="fixed inset-0 z-50 flex items-end justify-center md:items-center bg-black/50 md:p-4 backdrop-blur-sm transition-all">
+      <div className="w-full md:max-w-md animate-in slide-in-from-bottom duration-300 md:zoom-in md:slide-in-from-center rounded-t-2xl md:rounded-2xl bg-white shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+        <div className="flex items-center justify-between border-b bg-gray-50 p-4 shrink-0">
           <h2 className="text-lg font-bold text-gray-800">
             {initialData ? 'Edit Transaction' : (type === 'income' ? 'New Income' : 'New Expense')}
           </h2>
@@ -56,9 +56,9 @@ const TransactionForm: React.FC<TransactionFormProps> = ({ initialData, defaultT
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="p-4 space-y-4">
+        <form onSubmit={handleSubmit} className="p-4 space-y-4 overflow-y-auto">
           {/* Type Switcher */}
-          <div className="flex rounded-lg bg-gray-100 p-1">
+          <div className="flex rounded-lg bg-gray-100 p-1 shrink-0">
             <button
               type="button"
               onClick={() => setType('income')}
@@ -92,6 +92,7 @@ const TransactionForm: React.FC<TransactionFormProps> = ({ initialData, defaultT
                 onChange={(e) => setAmount(e.target.value)}
                 className="w-full rounded-xl border border-gray-200 bg-gray-50 py-2.5 pl-7 pr-4 text-lg font-semibold text-gray-900 outline-none focus:border-blue-500 focus:bg-white focus:ring-1 focus:ring-blue-500 transition-all"
                 placeholder="0.00"
+                autoFocus={!initialData} 
               />
             </div>
           </div>
@@ -142,7 +143,7 @@ const TransactionForm: React.FC<TransactionFormProps> = ({ initialData, defaultT
             </div>
           </div>
 
-          <div className="pt-2">
+          <div className="pt-2 pb-safe">
             <button
               type="submit"
               className={`w-full rounded-xl py-3 text-sm font-semibold text-white active:scale-[0.98] transition-all shadow-lg ${type === 'income' ? 'bg-green-600 hover:bg-green-700 shadow-green-200' : 'bg-blue-600 hover:bg-blue-700 shadow-blue-200'}`}

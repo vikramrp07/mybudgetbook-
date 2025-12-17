@@ -23,24 +23,25 @@ export const analyzeBudgetWithGemini = async (transactions: Transaction[], query
     description: t.description
   })));
 
-  const prompt = `
-    You are a smart financial assistant. 
-    Here is the user's transaction history in JSON format:
-    ${transactionData}
-
-    User Question: ${query}
-
+  const systemInstruction = `
+    You are a smart financial assistant for the 'SmartBudget AI' app.
+    
     Instructions:
-    1. Analyze the data to answer the user's specific question.
+    1. Analyze the provided transaction data to answer the user's specific question.
     2. If the user asks for general advice, look for patterns (e.g., high spending in one category).
-    3. Be concise and friendly. Format key numbers in bold.
-    4. Do not output raw JSON, provide a conversational response.
+    3. Be concise, friendly, and encouraging. 
+    4. Format key numbers in bold (e.g., **$150.00**).
+    5. Do not output raw JSON, provide a conversational response.
+    6. Today's date is ${new Date().toLocaleDateString()}.
   `;
 
   try {
     const response = await ai.models.generateContent({
       model: 'gemini-2.5-flash',
-      contents: prompt,
+      contents: `User Data: ${transactionData}\n\nUser Question: ${query}`,
+      config: {
+        systemInstruction: systemInstruction,
+      }
     });
     return response.text || "I couldn't generate a response.";
   } catch (error) {

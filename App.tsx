@@ -241,7 +241,7 @@ const App: React.FC = () => {
         {activeTab === 'dashboard' && <DashboardView />}
         {activeTab === 'transactions' && <TransactionsView />}
         {activeTab === 'ai' && (
-            <div className="h-[calc(100vh-140px)] md:h-[600px]">
+            <div className="h-[calc(100dvh-140px)] md:h-[600px]">
                 <AIChat transactions={transactions} onClose={() => setActiveTab('dashboard')} />
             </div>
         )}
